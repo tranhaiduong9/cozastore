@@ -8,5 +8,6 @@ public class CozastoreApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CozastoreApplication.class, args);
+
 	}
 }
