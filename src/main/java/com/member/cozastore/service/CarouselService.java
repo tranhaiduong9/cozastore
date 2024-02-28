@@ -2,7 +2,7 @@ package com.member.cozastore.service;
 
 import com.member.cozastore.entity.CarouselEntity;
 import com.member.cozastore.payload.response.CarouselResponse;
-import com.member.cozastore.repository.UserRepository;
+import com.member.cozastore.repository.CarouselRepository;
 import com.member.cozastore.service.Imp.CarouselServiceImp;
 import com.member.cozastore.service.Imp.FileStorageServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class CarouselService implements CarouselServiceImp {
     private FileStorageServiceImp fileStorageServiceImp;
 
     @Autowired
-    private UserRepository.CarouselRepository carouselRepository;
+    private CarouselRepository carouselRepository;
 
     @Override
     public byte[] loadCarouselPicture(String fileName) throws IOException {
