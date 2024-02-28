@@ -1,6 +1,6 @@
 package com.member.cozastore.entity;
 
-import com.member.cozastore.entity.CompositeKey.BlogTagKey;
+import com.member.cozastore.entity.combinedKey.ProductOrderCombinedKey;
 import jakarta.persistence.*;
 
 import java.sql.Date;
@@ -9,7 +9,7 @@ import java.sql.Date;
 public class BlogTagEntity {
 
     @EmbeddedId
-    private BlogTagKey blogTagKey;
+    private ProductOrderCombinedKey.BlogTagKey blogTagKey;
 
     @ManyToOne
     @JoinColumn(name = "id_blog", insertable = false, updatable = false)
@@ -22,11 +22,11 @@ public class BlogTagEntity {
     @Column(name = "create_date")
     private Date createDate;
 
-    public BlogTagKey getBlogTagKey() {
+    public ProductOrderCombinedKey.BlogTagKey getBlogTagKey() {
         return blogTagKey;
     }
 
-    public void setBlogTagKey(BlogTagKey blogTagKey) {
+    public void setBlogTagKey(ProductOrderCombinedKey.BlogTagKey blogTagKey) {
         this.blogTagKey = blogTagKey;
     }
 
