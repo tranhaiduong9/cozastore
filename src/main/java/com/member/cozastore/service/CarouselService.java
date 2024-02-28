@@ -2,7 +2,7 @@ package com.member.cozastore.service;
 
 import com.member.cozastore.entity.CarouselEntity;
 import com.member.cozastore.payload.response.CarouselResponse;
-import com.member.cozastore.respository.CarouselRepository;
+import com.member.cozastore.repository.CarouselRepository;
 import com.member.cozastore.service.Imp.CarouselServiceImp;
 import com.member.cozastore.service.Imp.FileStorageServiceImp;
 import org.springframework.beans.factory.annotation.Autowired;

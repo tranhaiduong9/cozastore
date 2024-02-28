@@ -3,7 +3,7 @@ package com.member.cozastore.service;
 import com.member.cozastore.entity.*;
 import com.member.cozastore.payload.request.ProductInsertRequest;
 import com.member.cozastore.payload.response.ProductResponse;
-import com.member.cozastore.respository.ProductRespository;
+import com.member.cozastore.repository.ProductRespository;
 import com.member.cozastore.service.Imp.DetailImageServiceImp;
 import com.member.cozastore.service.Imp.FileStorageServiceImp;
 import com.member.cozastore.service.Imp.ProductServiceImp;

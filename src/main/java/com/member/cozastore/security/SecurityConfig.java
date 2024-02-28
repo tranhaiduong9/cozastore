@@ -57,6 +57,7 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+    @Bean
     public AuthenticationManager authenticationManager(HttpSecurity httpSecurity) throws Exception {
 
         return httpSecurity.getSharedObject(AuthenticationManagerBuilder.class)

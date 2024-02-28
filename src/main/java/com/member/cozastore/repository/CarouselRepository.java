@@ -1,4 +1,4 @@
-package com.member.cozastore.respository;
+package com.member.cozastore.repository;
 
 import com.member.cozastore.entity.CarouselEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
