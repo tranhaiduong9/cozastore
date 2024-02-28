@@ -10,5 +10,4 @@ public class CozastoreApplication {
 		SpringApplication.run(CozastoreApplication.class, args);
 
 	}
-
 }
