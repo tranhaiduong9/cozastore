@@ -1,4 +1,4 @@
-package com.member.cozastore.entity.CompositeKey;
+package com.member.cozastore.entity.combinedKey;
 
 import jakarta.persistence.Column;
 

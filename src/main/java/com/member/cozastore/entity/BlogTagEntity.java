@@ -1,6 +1,6 @@
 package com.member.cozastore.entity;
 
-import com.member.cozastore.entity.CompositeKey.BlogTagKey;
+import com.member.cozastore.entity.combinedKey.BlogTagKey;
 import jakarta.persistence.*;
 
 import java.sql.Date;
