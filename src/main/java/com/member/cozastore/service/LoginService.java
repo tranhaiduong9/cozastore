@@ -1,5 +1,6 @@
 package com.member.cozastore.service;
 
+import com.member.cozastore.entity.RoleEntity;
 import com.member.cozastore.entity.UserEntity;
 import com.member.cozastore.entity.VerificationTokenEntity;
 import com.member.cozastore.payload.BaseResponse;
@@ -10,6 +11,7 @@ import com.member.cozastore.repository.UserRepository;
 import com.member.cozastore.repository.VerificationTokenRepository;
 import com.member.cozastore.service.imp.LoginServiceImp;
 import com.member.cozastore.util.JwtHelper;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -81,18 +83,18 @@ public class LoginService implements LoginServiceImp {
                 verificationTokenRepository.deleteById(verificationToken.getId());
                 userRepository.updateVerifyById(verificationToken.getUser().getId());
                 verifyEmailResponse.setSuccess(true);
-                verifyEmailResponse.setStatus("xác thực thành công");
+                verifyEmailResponse.setStatus("Verified successfully");
             } else {
                 userRepository.deleteById(verificationToken.getUser().getId());
                 verifyEmailResponse.setSuccess(false);
-                verifyEmailResponse.setStatus("mã xác thực đã hết hạn");
+                verifyEmailResponse.setStatus("Verification has expired");
             }
         } else if (verificationToken != null){
             verifyEmailResponse.setSuccess(false);
-            verifyEmailResponse.setStatus("mã xác thực không hợp lệ");
+            verifyEmailResponse.setStatus("Invalid verification");
         } else {
             verifyEmailResponse.setSuccess(false);
-            verifyEmailResponse.setStatus("Không tìm thấy email hoặc email đã xác thực");
+            verifyEmailResponse.setStatus("Can not find email or email verified");
         }
         return verifyEmailResponse;
     }
@@ -109,4 +111,11 @@ public class LoginService implements LoginServiceImp {
         return isExist;
     }
 
+    @Override
+    public boolean isUserVerify(String email) {
+        boolean isVerify = false;
+        UserEntity userEntity = userRepository.findByEmail(email);
+        isVerify = userEntity.getIsVerify() == 0 ? false : true;
+        return isVerify;
+    }
 }

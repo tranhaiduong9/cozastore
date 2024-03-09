@@ -58,22 +58,25 @@ public class LoginController {
         UsernamePasswordAuthenticationToken authen = new UsernamePasswordAuthenticationToken(email, password);
         BaseResponse baseResponse = new BaseResponse();
 
-
         try {
-            authenticationManager.authenticate(authen);
+            if(loginServiceImp.isUserVerify(email)){
+                authenticationManager.authenticate(authen);
 
-            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-            List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
-            String jsonRole = gson.toJson(roles);
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                List<SimpleGrantedAuthority> roles = (List<SimpleGrantedAuthority>) authentication.getAuthorities();
+                String jsonRole = gson.toJson(roles);
+                String token = jwtHelper.generateToken(jsonRole);
 
-            String token = jwtHelper.generateToken(jsonRole);
+                baseResponse = response.baseResponse(200,"", token);
 
-            baseResponse = response.baseResponse(200,"", token);
-
-            return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+                return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+            } else {
+                baseResponse = response.baseResponse(200,"Unverified email", "");
+                return new ResponseEntity<>(baseResponse, HttpStatus.FORBIDDEN);
+            }
 
         }catch (Exception e) {
-            baseResponse = response.baseResponse(200,"Signin Error: " + e.getLocalizedMessage(), "");
+            baseResponse = response.baseResponse(200, "Signin Error: " + e.getLocalizedMessage(), "");
             return new ResponseEntity<>(baseResponse, HttpStatus.OK);
         }
 

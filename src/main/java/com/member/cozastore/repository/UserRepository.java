@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     //Set isverify column to 1
     @Transactional
     @Modifying
-    @Query("update user u set u.isVerify = 1 WHERE u.id = :id")
+    @Query("update user u set u.isVerify = 1, u.role.id = 2 WHERE u.id = :id")
     int updateVerifyById(int id);
 }

@@ -1,7 +1,9 @@
 package com.member.cozastore.service.imp;
 
+import com.member.cozastore.entity.UserEntity;
 import com.member.cozastore.payload.request.SignUpRequest;
 import com.member.cozastore.payload.response.VerifyEmailResponse;
+import org.apache.catalina.User;
 
 public interface LoginServiceImp {
 
@@ -12,4 +14,6 @@ public interface LoginServiceImp {
     VerifyEmailResponse verifyToken(String verifyToken);
 
     boolean isEmailExist (String email);
+
+    boolean isUserVerify (String email);
 }
