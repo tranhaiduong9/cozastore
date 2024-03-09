@@ -1,4 +1,4 @@
-package com.member.cozastore.service.imp;
+package com.member.cozastore.service.Imp;
 
 import com.member.cozastore.entity.UserEntity;
 import com.member.cozastore.payload.request.SignUpRequest;
@@ -16,4 +16,6 @@ public interface LoginServiceImp {
     boolean isEmailExist (String email);
 
     boolean isUserVerify (String email);
+
+    boolean resetPassword (String email, String password);
 }

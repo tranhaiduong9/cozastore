@@ -6,10 +6,11 @@ import com.member.cozastore.payload.BaseResponse;
 import com.member.cozastore.payload.Response;
 import com.member.cozastore.payload.request.SignUpRequest;
 import com.member.cozastore.payload.response.VerifyEmailResponse;
-import com.member.cozastore.service.imp.LoginServiceImp;
+import com.member.cozastore.service.Imp.LoginServiceImp;
 import com.member.cozastore.util.JwtHelper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,18 +32,16 @@ public class LoginController {
     private Response response;
     @Autowired
     private EmailService emailService;
-
     @Autowired
     private LoginServiceImp loginServiceImp;
-
     @Autowired
     private AuthenticationManager authenticationManager;
-
     @Autowired
     private JwtHelper jwtHelper;
-
     @Autowired
     private Gson gson = new Gson();
+    @Value("${testing.email}")
+    private String testingEmail;
 
     @GetMapping()
     public ResponseEntity<?> login() {
@@ -84,7 +83,6 @@ public class LoginController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup (@Valid @RequestBody SignUpRequest signUpRequest) {
-        String testingEmail = "duongth210897work@gmail.com";
         boolean isSuccess = false;
         boolean isEmailExist = loginServiceImp.isEmailExist(signUpRequest.getEmail());
         BaseResponse baseResponse = new BaseResponse();
@@ -94,7 +92,7 @@ public class LoginController {
             loginServiceImp.insertVerifyToken(signupToken, signUpRequest.getEmail());
 
             String body = "Click here to verify: http://127.0.0.1:5500/fe_cozastore/verify-announ.html?token="+signupToken;
-            emailService.sendEmail(testingEmail, "Sign up success", body);
+            emailService.sendEmail(signUpRequest.getEmail(), "Sign up success", body);
 
             baseResponse = response.baseResponse(200,"",isSuccess);
         } else {
@@ -109,6 +107,28 @@ public class LoginController {
 
         BaseResponse baseResponse = response.baseResponse(200,"",verifyEmailResponse);
 
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/forgot")
+    public ResponseEntity<?> sendForgotPasswordEmail (String email) {
+        boolean isSuccess = false;
+        BaseResponse baseResponse = new BaseResponse();
+        if (loginServiceImp.isEmailExist(email)){
+            String body = "Click here to reset your password: http://127.0.0.1:5500/fe_cozastore/reset-password.html?email="+email;
+            emailService.sendEmail(email, "Reset password", body );
+            isSuccess = true;
+            baseResponse = response.baseResponse(200,"",isSuccess);
+        } else {
+            baseResponse = response.baseResponse(200,"No user found",isSuccess);
+        }
+        return new ResponseEntity<>(baseResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/reset")
+    public ResponseEntity<?> resetPassword (String email, String password) {
+        boolean isSuccess = loginServiceImp.resetPassword(email, password);
+        BaseResponse baseResponse = response.baseResponse(200,"reset password successfully",isSuccess);
         return new ResponseEntity<>(baseResponse, HttpStatus.OK);
     }
 }

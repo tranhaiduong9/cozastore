@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    
+    var link = document.querySelector("a");
+    link.setAttribute("href", "forgot-password.html");
 
     $("#btn-sign-in").click(function(){
 

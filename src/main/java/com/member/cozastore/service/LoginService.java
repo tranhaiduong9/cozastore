@@ -9,7 +9,7 @@ import com.member.cozastore.payload.request.VerifyTokenRequest;
 import com.member.cozastore.payload.response.VerifyEmailResponse;
 import com.member.cozastore.repository.UserRepository;
 import com.member.cozastore.repository.VerificationTokenRepository;
-import com.member.cozastore.service.imp.LoginServiceImp;
+import com.member.cozastore.service.Imp.LoginServiceImp;
 import com.member.cozastore.util.JwtHelper;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,5 +117,13 @@ public class LoginService implements LoginServiceImp {
         UserEntity userEntity = userRepository.findByEmail(email);
         isVerify = userEntity.getIsVerify() == 0 ? false : true;
         return isVerify;
+    }
+
+    @Override
+    public boolean resetPassword(String email, String password) {
+        boolean isSuccess = false;
+        String newPass = passwordEncoder.encode(password);
+        isSuccess = userRepository.updatePasswordByEmail(email, newPass) == 0 ? false : true;
+        return isSuccess;
     }
 }

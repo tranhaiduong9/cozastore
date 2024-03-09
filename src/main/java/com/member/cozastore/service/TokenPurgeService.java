@@ -1,7 +1,7 @@
 package com.member.cozastore.service;
 
 import com.member.cozastore.repository.VerificationTokenRepository;
-import com.member.cozastore.service.imp.TokenPurgeServiceImp;
+import com.member.cozastore.service.Imp.TokenPurgeServiceImp;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;

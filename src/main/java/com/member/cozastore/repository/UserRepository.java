@@ -23,6 +23,12 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer> {
     @Query("update user u set u.isVerify = 1, u.role.id = 2 WHERE u.id = :id")
     int updateVerifyById(int id);
 
+    //Reset password
+    @Transactional
+    @Modifying
+    @Query("update user u set u.password = :password WHERE u.email = :email")
+    int updatePasswordByEmail(String email, String password);
+
     @Repository
     interface CarouselRepository extends JpaRepository<CarouselEntity, Integer> {
     }
