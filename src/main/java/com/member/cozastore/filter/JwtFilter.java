@@ -41,9 +41,6 @@ public class JwtFilter extends OncePerRequestFilter {
             if (data != null & !data.isEmpty()) {
                 Type listType = new TypeToken<ArrayList<SimpleGrantedAuthority>>(){}.getType();
                 List<SimpleGrantedAuthority> roles =  gson.fromJson(data, listType);
-//                List<GrantedAuthority> roles = new ArrayList<>();
-//                GrantedAuthority grantedAuthority = new SimpleGrantedAuthority("ROLE_ADMIN");
-//                roles.add(grantedAuthority);
 
                 UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("","",roles);
 

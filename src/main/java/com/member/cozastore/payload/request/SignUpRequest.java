@@ -3,8 +3,11 @@ package com.member.cozastore.payload.request;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.Getter;
+import lombok.Setter;
 
 public class SignUpRequest {
+
     @NotNull
     @NotBlank(message = "username không được rỗng")
     private String userName;

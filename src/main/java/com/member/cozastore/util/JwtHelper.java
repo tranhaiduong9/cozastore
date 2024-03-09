@@ -16,6 +16,7 @@ public class JwtHelper {
     private String secKey;
 
     private long expiredTime = 8 * 60 * 60 * 1000;
+    private long SignupExpiredTimeToken =2 * 60 * 60 * 1000;
 
     public String generateToken(String data){
         SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secKey));
@@ -41,4 +42,28 @@ public class JwtHelper {
         return data;
     }
 
+    public String generateSignupToken(String data){
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode(secKey));
+
+        Date date = new Date();
+        long newDateMilis = date.getTime() + SignupExpiredTimeToken;
+        Date newExpiredDate = new Date(newDateMilis);
+
+        String token = Jwts.builder()
+                .setSubject(data)
+                .signWith(key)
+                .setExpiration(newExpiredDate)
+                .compact();
+        return token;
+    }
+
+    public Date getExprirationToken (String token) {
+        SecretKey key = Keys.hmacShaKeyFor(Decoders.BASE64URL.decode((secKey)));
+
+        Date data = Jwts.parser()
+                .setSigningKey(key).build()
+                .parseClaimsJws(token)
+                .getBody().getExpiration();
+        return data;
+    }
 }

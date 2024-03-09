@@ -1,6 +1,10 @@
 package com.member.cozastore.entity;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Date;
 import java.util.List;
@@ -24,12 +28,22 @@ public class UserEntity {
     @Column(name = "create_date")
     private Date createDate;
 
+    @Getter
+    @Setter
+    @Column(name = "isverify")
+    private int isVerify;
+
     @ManyToOne
     @JoinColumn(name = "id_role")
     private RoleEntity role;
 
     @OneToMany(mappedBy = "user")
     private List<BlogEntity> blogs;
+
+    @Getter
+    @Setter
+    @OneToOne(mappedBy = "user")
+    private VerificationTokenEntity verificationToken;
 
     public int getId() {
         return id;
